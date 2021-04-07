@@ -57,7 +57,7 @@ public class KWLinkedList<E> extends AbstractSequentialList<E> {
 
     /**
      * Return a ListIterator to the list
-     * @return a ListItertor to the list
+     * @return a ListIterator to the list
      */
     @Override
     public ListIterator<E> listIterator() {
@@ -137,7 +137,7 @@ public class KWLinkedList<E> extends AbstractSequentialList<E> {
     }
 
     /** Inner class to implement the ListIterator interface. */
-    private class KWListIter implements ListIterator<E> {
+    private class KWListIter implements ListIterator<E>{
 
         /** A reference to the next item. */
         private Node<E> nextItem;
@@ -371,7 +371,7 @@ public class KWLinkedList<E> extends AbstractSequentialList<E> {
     /**
      * Method to find the index of the last occurence of an item in the list
      * @param target The item being sought
-     * @return The index of the last occurence of the tartet item
+     * @return The index of the last occurence of the target item
      *         or -1 if the item is not found.
      */
     @Override
@@ -386,33 +386,5 @@ public class KWLinkedList<E> extends AbstractSequentialList<E> {
             }
         }
         return -1;
-    }
-
-    /**
-     * Method to return the index of the minimum item in the list
-     * It is assumed that each item in the list implements Comparable
-     * @return Index of the minimum item in the list
-     *         or -1 if the list is empty
-     * @throws ClassCastExcepition if the list elements do not implement Comparable
-     */
-    public int indexOfMin() {
-        int index = 0;
-        int minIndex = 0;
-        Iterator<E> itr = iterator();
-        Comparable<E> minItem = null;
-        if (itr.hasNext()) {
-            minItem = (Comparable<E>) itr.next();
-        } else {
-            return -1;
-        }
-        while (itr.hasNext()) {
-            E nextItem = itr.next();
-            index++;
-            if (minItem.compareTo(nextItem) >= 0) {
-                minItem = (Comparable<E>) nextItem;
-                minIndex = index;
-            }
-        }
-        return minIndex;
     }
 }
