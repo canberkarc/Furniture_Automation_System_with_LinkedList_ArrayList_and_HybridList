@@ -163,7 +163,7 @@ public class Main{
 	                        while(checkBranch == false){
                         		System.out.println("Please enter \"branch name\" to add a branch employee:");
                             	namee = inputString.nextLine();
-	                        	for(int i=0; i<company.getNumberOfBranches(); i++){
+	                        	for(int i=0; i < company.getNumberOfBranches(); i++){
 	                        		if(company.getBranchList().get(i).getBranchName().equals(namee)){
 	                        				checkBranch = true;
 	                        				index3 = company.getBranchList().get(i).getBranchId();
@@ -209,8 +209,10 @@ public class Main{
 				    			}
 
 								for(int i=0; i<company.getNumberOfBranches(); i++){
-									if(company.getBranchList().get(i).getBranchId() == brId)
+									if(company.getBranchList().get(i).getBranchId() == brId){
 										checkBranch = true;
+										break;
+									}
 	                        	}
 	                        }
 
@@ -232,13 +234,14 @@ public class Main{
                         	if(company.getNumberOfEmployees() > 0){
 	                        	for(int i=0; i<company.getNumberOfEmployees(); i++){
 									if(company.getEmployeeList().get(i).getId() == exit){
-										index1 = i;
+										index1 = exit;
+										break;
 									}
 								}
 							}
 
 							if(index1 != -1){
-								company.getAdmin().removeBranchEmployee(company.getEmployeeList().get(index1), brId);
+								company.getAdmin().removeBranchEmployee(company.getEmployeeList().get(index1-1), brId);
 								company.showEmployees();								
 							}
 							else{

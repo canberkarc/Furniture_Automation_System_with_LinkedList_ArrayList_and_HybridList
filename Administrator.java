@@ -136,15 +136,15 @@ public class Administrator extends Company implements Person{
 		if(check == 1){
 			if(employeeList.size() > 0){
 				for(int i=0; i<employeeList.size(); i++){
-					if(branchList.get(branchId).employeeList.get(i) == newEmployee){
-						System.out.println(newEmployee.getName() + " cannot be added in " + branchList.get(branchId).getBranchName() + " because already in there.\n");
+					if(branchList.get(branchId-1).employeeList.get(i) == newEmployee){
+						System.out.println(newEmployee.getName() + " cannot be added in " + branchList.get(branchId-1).getBranchName() + " because already in there.\n");
 						return;
 					}
 				}
 			}
 
 		branchList.get(branchId-1).employeeList.add(newEmployee);
-		int new_emp_index = employeeList.size();
+		int new_emp_index = employeeList.size()-1;
 
 		branchList.get(branchId-1).employeeList.get(new_emp_index).setBranchId(branchList.get(branchId-1).getBranchId());
 		branchList.get(branchId-1).employeeList.get(new_emp_index).setBranchName(branchList.get(branchId-1).getBranchName());
@@ -160,24 +160,18 @@ public class Administrator extends Company implements Person{
 	 * @param branchId integer value that is id of branch 
 	 */
 	public void removeBranchEmployee(BranchEmployee rEmployee, int branchId){
-		for(int i=0; i < branchList.size(); i++){
-			if(branchList.get(i).getBranchId() == branchId){
-				int empIndex = -1;
-				
-				if(branchList.get(i).employeeList.indexOf(rEmployee) != -1){
-					empIndex = branchList.get(i).employeeList.indexOf(rEmployee);
-					break;
-				}
-
-				if(empIndex != -1){
-					branchList.get(i).employeeList.remove(empIndex);
-					System.out.println(rEmployee.getName() + " " + rEmployee.getSurname() + " is removed from " + branchList.get(i).getBranchName() + " \n");	
-				}
-				else
-					System.out.println(rEmployee.getName() + " " + rEmployee.getSurname() + " is not removed from " + branchList.get(i).getBranchName() + " because it is not found.\n");
-			}
+		int empIndex = -1;
+		
+		if(branchList.get(branchId-1).employeeList.indexOf(rEmployee) != -1){
+			empIndex = branchList.get(branchId-1).employeeList.indexOf(rEmployee);
 		}
 		
+		if(empIndex != -1){
+			branchList.get(branchId-1).employeeList.remove(empIndex);
+			System.out.println(rEmployee.getName() + " " + rEmployee.getSurname() + " is removed from " + branchList.get(branchId-1).getBranchName() + " \n");	
+		}
+		else
+			System.out.println(rEmployee.getName() + " " + rEmployee.getSurname() + " is not removed from " + branchList.get(branchId-1).getBranchName() + " because it is not found.\n");
 	}
 
 	/**

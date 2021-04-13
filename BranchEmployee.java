@@ -231,15 +231,17 @@ public class BranchEmployee extends Branch implements Person {
 	public void addCustomer(Customer c){
 		int check = 0;
 		if(customerList.size() == 0){
-			customerList.add(c);   ////////////////*************** HATA FALAN OLURSA BU SATIRI KONTROL ET ********************//////////////////
-			customerList.get(customerList.size()).setCustomerNumber(customerList.size()+1);
-			System.out.println(customerList.get(customerList.size()).getName() + " " + customerList.get(customerList.size()).getSurname() + " is subscribed.\n");
+			customerList.add(c);
+			int customerIndex = customerList.size()-1;
+			customerList.get(customerIndex).setCustomerNumber(customerList.size());
+			System.out.println(customerList.get(customerIndex).getName() + " " + customerList.get(customerIndex).getSurname() + " is subscribed.\n");
 		}
 		else{
 			if(!isSubscribed(c)){
 				customerList.add(c);
-				customerList.get(customerList.size()).setCustomerNumber(customerList.size()+1);
-				System.out.println(customerList.get(customerList.size()).getName() + " " + customerList.get(customerList.size()).getSurname() + " is subscribed.\n");
+				int customerIndex = customerList.size()-1;
+				customerList.get(customerIndex).setCustomerNumber(customerList.size());
+				System.out.println(customerList.get(customerIndex).getName() + " " + customerList.get(customerIndex).getSurname() + " is subscribed.\n");
 			}
 		}
 	}
