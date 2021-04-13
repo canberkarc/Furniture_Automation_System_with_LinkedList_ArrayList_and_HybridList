@@ -234,14 +234,14 @@ public class Main{
                         	if(company.getNumberOfEmployees() > 0){
 	                        	for(int i=0; i<company.getNumberOfEmployees(); i++){
 									if(company.getEmployeeList().get(i).getId() == exit){
-										index1 = exit;
+										index1 = i;
 										break;
 									}
 								}
 							}
 
 							if(index1 != -1){
-								company.getAdmin().removeBranchEmployee(company.getEmployeeList().get(index1-1), brId);
+								company.getAdmin().removeBranchEmployee(company.getEmployeeList().get(index1), brId);
 								company.showEmployees();								
 							}
 							else{
@@ -250,9 +250,7 @@ public class Main{
                         	break;
 
                         case 5:
-							company.showBranches();
-							company.showEmployees();
-							company.showCustomers();
+							System.out.println(company);
 							break;
 
 						case 6:
@@ -505,6 +503,8 @@ public class Main{
                     		String modelName2;
                     		String color2;
                         	
+                    		company.
+
                     		System.out.println("\nPlease enter product name: ");
                     		productName2 = inputString.nextLine();
                     		System.out.println("Please enter model name: ");

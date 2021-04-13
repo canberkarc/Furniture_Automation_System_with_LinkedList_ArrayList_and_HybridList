@@ -79,7 +79,7 @@ public class Administrator extends Company implements Person{
 			return;
 		}
 		else{
-				branchList.addFirst(newBranch);
+				branchList.addLast(newBranch);
 				System.out.println(newBranch.getBranchName() + " branch is added.\n");
 		}
 	}
@@ -160,18 +160,10 @@ public class Administrator extends Company implements Person{
 	 * @param branchId integer value that is id of branch 
 	 */
 	public void removeBranchEmployee(BranchEmployee rEmployee, int branchId){
-		int empIndex = -1;
+		int	empIndex = branchList.get(branchId-1).employeeList.indexOf(rEmployee);
 		
-		if(branchList.get(branchId-1).employeeList.indexOf(rEmployee) != -1){
-			empIndex = branchList.get(branchId-1).employeeList.indexOf(rEmployee);
-		}
-		
-		if(empIndex != -1){
-			branchList.get(branchId-1).employeeList.remove(empIndex);
-			System.out.println(rEmployee.getName() + " " + rEmployee.getSurname() + " is removed from " + branchList.get(branchId-1).getBranchName() + " \n");	
-		}
-		else
-			System.out.println(rEmployee.getName() + " " + rEmployee.getSurname() + " is not removed from " + branchList.get(branchId-1).getBranchName() + " because it is not found.\n");
+		branchList.get(branchId-1).employeeList.remove(empIndex);
+		System.out.println(rEmployee.getName() + " " + rEmployee.getSurname() + " is removed from " + branchList.get(branchId-1).getBranchName() + " \n");	
 	}
 
 	/**

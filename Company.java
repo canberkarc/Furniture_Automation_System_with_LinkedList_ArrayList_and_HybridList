@@ -177,6 +177,8 @@ public class Company{
 			str += "\n\n";
 			}
 		}
+		else
+			str = str + "There is no employee in the company\n";
 		System.out.println(str);
 	}
 
@@ -226,6 +228,11 @@ public class Company{
 			str += "\n\n";
 			}
 		}
+		else{
+			str += "Branches of Company: \n\n";
+			str = str + "There is no branch of the company.\n";
+			str += "\n\n";
+		}
 		if(employeeList.size() > 0){	
 			str += "Employees of Company: \n\n";
 			for(int i=0; i<employeeList.size(); i++){
@@ -242,6 +249,11 @@ public class Company{
 			str += "\n\n";
 			}
 		}
+		else{
+			str += "Employees of Company: \n\n";
+			str = str + "There is no employee of the company.\n";
+			str += "\n\n";
+		}
 		if(customerList.size() > 0){	
 			str += "Customers of Company: \n\n";
 			for(int i=0; i<customerList.size(); i++){
@@ -253,6 +265,11 @@ public class Company{
 				str += "\n";
 			str += "\n\n";
 			}
+		}
+		else{
+			str += "Customers of Company: \n\n";
+			str = str + "There is no customer of the company.\n";
+			str += "\n\n";
 		}
 		return str;
 	}
