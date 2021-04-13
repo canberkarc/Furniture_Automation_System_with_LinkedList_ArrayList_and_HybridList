@@ -503,7 +503,7 @@ public class Main{
                     		String modelName2;
                     		String color2;
                         	
-                    		company.
+                    		company.seeProductList();
 
                     		System.out.println("\nPlease enter product name: ");
                     		productName2 = inputString.nextLine();
