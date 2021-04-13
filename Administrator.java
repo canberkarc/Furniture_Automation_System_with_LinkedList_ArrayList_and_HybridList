@@ -2,6 +2,7 @@
 *@author Canberk Arici
 *
 */
+import java.util.ListIterator;
 
 public class Administrator extends Company implements Person{
 
@@ -78,7 +79,7 @@ public class Administrator extends Company implements Person{
 			return;
 		}
 		else{
-				branchList.addLast(newBranch);
+				branchList.addFirst(newBranch);
 				System.out.println(newBranch.getBranchName() + " branch is added.\n");
 		}
 	}
@@ -96,27 +97,21 @@ public class Administrator extends Company implements Person{
 		else{	
 			index = branchList.indexOf(rBranch);
 		if(index != -1){
+			
+			ListIterator<Branch> iter = branchList.listIterator();
+			
 			if(branchList.size() == 1){
-				///////////***************** BU METODDA BURADA KALDIM ************////////////////
-				Iterator<Branch> iter = branchList.listIterator();
+				iter.next();
 				iter.remove();
 			}
 			else{
-				KWLinkedList<Branch> branchListNew = new KWLinkedList<Branch>();
-				for (int i = index; i < branchList.size() - 1; i++) {
-		    		branchList[i] = branchList[i + 1];
+				int ind = 0;
+				while(ind != branchList.indexOf(rBranch)){
+					ind++;
+					iter.next();
 				}
-				Iterator<Branch> it = branchList.listIterator();
-				for(int i=0; i<branchList.size()-1; i++){
-					branchListNew[i] = branchList[i];
-				}
-
-				numberOfBranches -= 1;
-				branchList = new Branch[50];
-
-				for(int i=0; i<branchList.size(); i++){
-					branchList[i] = branchListNew[i];
-				}
+				iter.next();
+				iter.remove(); /* Delete wanted branch*/
 
 				System.out.println(rBranch.getBranchName() + " is removed \n");
 			}	
@@ -164,31 +159,18 @@ public class Administrator extends Company implements Person{
 	 * @param rEmployee BranchEmployee object to be added
 	 * @param branchId integer value that is id of branch 
 	 */
-	/////////////////************ BU METODU BAKMADIM HENUZ ****************/////////////////
 	public void removeBranchEmployee(BranchEmployee rEmployee, int branchId){
-		for(int i=0; i<numberOfBranches; i++){
-			if(branchList[i].getBranchId() == branchId){
-				int index = -1;
-				for(int j=0; j < branchList[i].employeeList.length; j++){
-					if(branchList[i].employeeList[j] == rEmployee)
-						index = j;
+		for(int i=0; i < branchList.size(); i++){
+			if(branchList.get(i).getBranchId() == branchId){
+				int empIndex = -1;
+				
+				if(branchList.get(i).employeeList.indexOf(rEmployee) != -1){
+					empIndex = branchList.get(i).employeeList.indexOf(rEmployee);
+					break;
 				}
-				if(index != -1){
-					int size = branchList[i].employeeList.length-1;
-					BranchEmployee [] employeeList_temp = new BranchEmployee [size];
-					for(int k=index; k<branchList[i].employeeList.length-1; k++)
-						branchList[i].employeeList[k] = branchList[i].employeeList[k+1];
 
-					for(int y=0; y<branchList[i].employeeList.length-1; y++)
-						employeeList_temp[y] = branchList[i].employeeList[y];
-
-					branchList[i].employeeList = new BranchEmployee [branchList[i].employeeList.length-1];
-					
-					for(int p=0; p<branchList[i].employeeList.length; p++){
-						branchList[i].employeeList[p] = employeeList_temp[p];
-					}
-
-					employeeList.size() -= 1;
+				if(empIndex != -1){
+					branchList.get(i).employeeList.remove(empIndex);
 					System.out.println(rEmployee.getName() + " " + rEmployee.getSurname() + " is removed from " + branchList.get(i).getBranchName() + " \n");	
 				}
 				else
