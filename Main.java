@@ -141,13 +141,13 @@ public class Main{
                         	int index = -1;
                         	if(company.getNumberOfBranches() > 0){
 	                        	for(int i=0; i<company.getNumberOfBranches(); i++){
-									if(company.getBranchList()[i].getBranchId() == exit){
+									if(company.getBranchList().get(i).getBranchId() == exit){
 										index = i;
 									}
 								}
 							}
 							if(index != -1){
-								company.getAdmin().removeBranch(company.getBranchList()[index]);
+								company.getAdmin().removeBranch(company.getBranchList().get(index));
 								company.showBranches();
 							}
 							else{
@@ -164,9 +164,9 @@ public class Main{
                         		System.out.println("Please enter \"branch name\" to add a branch employee:");
                             	namee = inputString.nextLine();
 	                        	for(int i=0; i<company.getNumberOfBranches(); i++){
-	                        		if(company.getBranchList()[i].getBranchName().equals(namee)){
+	                        		if(company.getBranchList().get(i).getBranchName().equals(namee)){
 	                        				checkBranch = true;
-	                        				index3 = company.getBranchList()[i].getBranchId();
+	                        				index3 = company.getBranchList().get(i).getBranchId();
 	                        				break;
 	                        		}
 	                        	}
@@ -209,7 +209,7 @@ public class Main{
 				    			}
 
 								for(int i=0; i<company.getNumberOfBranches(); i++){
-									if(company.getBranchList()[i].getBranchId() == brId)
+									if(company.getBranchList().get(i).getBranchId() == brId)
 										checkBranch = true;
 	                        	}
 	                        }
@@ -231,14 +231,14 @@ public class Main{
                         	int index1 = -1;
                         	if(company.getNumberOfEmployees() > 0){
 	                        	for(int i=0; i<company.getNumberOfEmployees(); i++){
-									if(company.getEmployeeList()[i].getId() == exit){
+									if(company.getEmployeeList().get(i).getId() == exit){
 										index1 = i;
 									}
 								}
 							}
 
 							if(index1 != -1){
-								company.getAdmin().removeBranchEmployee(company.getEmployeeList()[index1], brId);
+								company.getAdmin().removeBranchEmployee(company.getEmployeeList().get(index1), brId);
 								company.showEmployees();								
 							}
 							else{
@@ -281,7 +281,7 @@ public class Main{
 				    }
                     switch(exit){
                     	case 1:
-                    		company.getEmployeeList()[0].seeProductList();
+                    		company.getEmployeeList().get(0).seeProductList(); // HATA CIKARSA BURADAKI get'i BIR KONTROL ET //
                     		break;
 
                     	case 2:
@@ -289,7 +289,7 @@ public class Main{
                     		String productName;
                     		String modelName;
                     		String color;
-                    		company.getEmployeeList()[0].seeProductList();
+                    		company.getEmployeeList().get(0).seeProductList(); // HATA CIKARSA BURADAKI get'i BIR KONTROL ET //
                     		int control = 0;
 	                    	while(control == 0){
 	                    		System.out.println("\nPlease enter product name: ");
@@ -317,12 +317,12 @@ public class Main{
 			                		}
 			                	}
 	                    	}
-                    		company.getEmployeeList()[0].addProduct(company.getFurnitureList()[control],numberToAdd);
-                    		company.getEmployeeList()[0].seeProductList();
+                    		company.getEmployeeList().get(0).addProduct(company.getFurnitureList()[control],numberToAdd);
+                    		company.getEmployeeList().get(0).seeProductList();
                     		break;
 
                     	case 3:
-                    		company.getEmployeeList()[0].seeProductList();
+                    		company.getEmployeeList().get(0).seeProductList();
                     		int control1 = -1;
                     		int numToDelete = 0;
 	                    	while(control1 == -1){
@@ -353,8 +353,8 @@ public class Main{
 			                		}
 			                	}
 	                    	}
-                    		company.getEmployeeList()[0].removeProduct(company.getFurnitureList()[control1], numToDelete);
-	                    	company.getEmployeeList()[0].seeProductList();
+                    		company.getEmployeeList().get(0).removeProduct(company.getFurnitureList()[control1], numToDelete);
+	                    	company.getEmployeeList().get(0).seeProductList();
 	                    	break;
 
                     	case 4:
@@ -372,7 +372,7 @@ public class Main{
 	                        	System.out.println("Please try with a number!!");
 	                        	break;
 	                        }
-							company.getEmployeeList()[0].viewPreviousOrders(customersNum);
+							company.getEmployeeList().get(0).viewPreviousOrders(customersNum);
 							break;
 
 						case 5:
@@ -396,7 +396,7 @@ public class Main{
 					    			}
 
 									for(int i=0; i<company.getNumberOfBranches(); i++){
-										if(company.getCustomerList()[i].getCustomerNumber() == exit){
+										if(company.getCustomerList().get(i).getCustomerNumber() == exit){
 											checkBranch = true;
 											customersId2 = exit;
 											break;
@@ -404,7 +404,7 @@ public class Main{
 		                        	}
 		                        }
 
-	                        	company.getEmployeeList()[0].seeProductList();
+	                        	company.getEmployeeList().get(0).seeProductList();
 
 	                        	int control2 = 0;
 	                        	String productName1;
@@ -425,7 +425,7 @@ public class Main{
 					                		}
 					                	}
 		                    	}
-								company.getEmployeeList()[0].makeSale(company.getCustomerList()[customersId2-1], company.getFurnitureList()[control2]);
+								company.getEmployeeList().get(0).makeSale(company.getCustomerList().get(customersId2-1), company.getFurnitureList()[control2]);
 								if(company.getFurnitureList()[control2].getNumberInStock()-1 == 0 ){
 									company.getFurnitureList()[control2].setNumberInStock(0);
 								}
@@ -472,10 +472,10 @@ public class Main{
 		    				System.out.println("Please enter your password");
 		    				String passwordC = inputString.nextLine();
 		    				for(int i=0; i<company.getNumberOfCustomers(); i++){
-		    					if(company.getCustomerList()[i].getEmail().equals(emailC) && company.getCustomerList()[i].getPassword().equals(passwordC)){
+		    					if(company.getCustomerList().get(i).getEmail().equals(emailC) && company.getCustomerList().get(i).getPassword().equals(passwordC)){
 		    						loggedIn = true;
 		    						check4case = true;
-		    						customerIndex = company.getCustomerList()[i].getCustomerNumber()-1;
+		    						customerIndex = company.getCustomerList().get(i).getCustomerNumber()-1;
 		        					System.out.println("\nLog in successful.\n");
 		    						break;
 		    					}
@@ -489,7 +489,7 @@ public class Main{
 
                 		case 2:
                 			if(company.getNumberOfCustomers() > 0)
-                				company.getCustomerList()[0].seeProductList();
+                				company.getCustomerList().get(0).seeProductList();
                 			else
 		        				System.out.println("\nThere is no customer for now.\n");
 
@@ -560,7 +560,7 @@ public class Main{
                     				System.out.println("Please enter your password:");
                     				passwordC = inputString.nextLine();
                     				Customer newCustomer = new Customer(nameC, surnameC, emailC, passwordC);
-                    				company.getEmployeeList()[0].addCustomer(newCustomer);
+                    				company.getEmployeeList().get(0).addCustomer(newCustomer);
                     				loggedIn = true;
                     				customerIndex = newCustomer.getCustomerNumber()-1;
 	            				}
@@ -582,24 +582,24 @@ public class Main{
 	            					}
 	            				}
 	            				if(checkAns2 == 1){
-		            				if(company.getCustomerList()[customerIndex].getAddress().equals("None") || company.getCustomerList()[customerIndex].getPhoneNumber().equals("None")) {
+		            				if(company.getCustomerList().get(customerIndex).getAddress().equals("None") || company.getCustomerList().get(customerIndex).getPhoneNumber().equals("None")) {
 		            					String addressC;
 		            					String phoneC;
 		                				System.out.println("\nPlease enter your address:");
 		                				addressC = inputString.nextLine();
 		                				System.out.println("Please enter your phone number:");
 		                				phoneC = inputString.nextLine();
-		                				company.getCustomerList()[customerIndex].setAddress(addressC);
-		                				company.getCustomerList()[customerIndex].setPhoneNumber(phoneC);
+		                				company.getCustomerList().get(customerIndex).setAddress(addressC);
+		                				company.getCustomerList().get(customerIndex).setPhoneNumber(phoneC);
 		                				addressPh = true;
 		            				}
-		            				if(!(company.getCustomerList()[customerIndex].getAddress().equals("None") || company.getCustomerList()[customerIndex].getPhoneNumber().equals("None")))
+		            				if(!(company.getCustomerList().get(customerIndex).getAddress().equals("None") || company.getCustomerList().get(customerIndex).getPhoneNumber().equals("None")))
 		            					addressPh = true;
 
 		            				if(addressPh == true){
 		            					index3 = -1;
 			                        	
-			                        	company.getEmployeeList()[0].seeProductList();
+			                        	company.getEmployeeList().get(0).seeProductList();
 			                    		System.out.println("\nPlease enter product name you want to buy: ");
 			                    		productName2 = inputString.nextLine();
 			                    		System.out.println("Please enter model name you want to buy: ");
@@ -626,7 +626,7 @@ public class Main{
 				                    	
 				                    	if(index3 != -1){
 				                    		if(company.getFurnitureList()[index3].getNumberInStock() >= howMany){	
-				                    			boolean checkBuy = company.getCustomerList()[company.getNumberOfCustomers()-1].buy(company.getFurnitureList()[index3]);
+				                    			boolean checkBuy = company.getCustomerList().get(company.getNumberOfCustomers()-1).buy(company.getFurnitureList()[index3]);
 				                    			
 				                    			if(checkBuy == true){
 			                						
@@ -662,7 +662,7 @@ public class Main{
 		            			}
 		            			else{
 		            				index3 = -1;
-		            				company.getEmployeeList()[0].seeProductList();
+		            				company.getEmployeeList().get(0).seeProductList();
 		                    		System.out.println("\nPlease enter product name you want to buy: ");
 		                    		productName2 = inputString.nextLine();
 		                    		System.out.println("Please enter model name you want to buy: ");
@@ -689,7 +689,7 @@ public class Main{
 			                    	
 			                    	if(index3 != -1){
 				                    	if(company.getFurnitureList()[index3].getNumberInStock() >= howMany){	
-				                    		boolean checkBuy2 = company.getCustomerList()[company.getNumberOfCustomers()-1].buy(company.getFurnitureList()[index3]);
+				                    		boolean checkBuy2 = company.getCustomerList().get(company.getNumberOfCustomers()-1).buy(company.getFurnitureList()[index3]);
 					                    	if(checkBuy2 == true){	
 					                    		System.out.println("\nSale is done.");
 
@@ -721,7 +721,7 @@ public class Main{
             				}
             	case 5:
             		if(loggedIn){
-	            		company.getCustomerList()[company.getNumberOfCustomers()-1].viewPreviousOrders();		
+	            		company.getCustomerList().get(company.getNumberOfCustomers()-1).viewPreviousOrders();		
 	            		break;
 	            	}
 	            	else{
