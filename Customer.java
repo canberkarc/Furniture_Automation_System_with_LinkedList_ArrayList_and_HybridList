@@ -269,8 +269,8 @@ public class Customer extends Company implements Person{
 		if(this.previousOrders.getElCount() >0){
 			System.out.println("Previous Orders: \n\n");
 
-			for(int i=0; i<furnitureList.size(); i++){
-				for(int j=0; j<furnitureList.get(i).size(); j++){
+			for(int i=0; i<previousOrders.size(); i++){
+				for(int j=0; j<previousOrders.get(i).size(); j++){
 					System.out.println("Product: " + this.previousOrders.get(i).get(j).getProduct() + ".\n");
 					System.out.println("Model: " + this.previousOrders.get(i).get(j).getModel() + ".\n");
 					System.out.println("Color: " + this.previousOrders.get(i).get(j).getColor() + ".\n");

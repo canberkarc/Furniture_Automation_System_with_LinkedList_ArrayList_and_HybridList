@@ -1,4 +1,3 @@
-
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
@@ -280,9 +279,11 @@ public class Main{
 				    	System.out.println("Please try with a number!!");
 				    	break;
 				    }
+
+	    			int alIndex = -1;
                     switch(exit){
                     	case 1:
-                    		company.getEmployeeList().get(0).seeProductList(); // HATA CIKARSA BURADAKI get'i BIR KONTROL ET //
+                    		company.getEmployeeList().get(0).seeProductList();
                     		break;
 
                     	case 2:
@@ -290,9 +291,9 @@ public class Main{
                     		String productName;
                     		String modelName;
                     		String color;
-                    		company.getEmployeeList().get(0).seeProductList(); // HATA CIKARSA BURADAKI get'i BIR KONTROL ET //
-                    		int control = 0;
-	                    	while(control == 0){
+                    		company.getEmployeeList().get(0).seeProductList();
+                    		int control = -1;
+	                    	while(control == -1){
 	                    		System.out.println("\nPlease enter product name: ");
 	                    		productName = inputString.nextLine();
 	                    		System.out.println("Please enter model name: ");
@@ -311,14 +312,17 @@ public class Main{
 							    	System.out.println("Please try with a number!!");
 					    			break;
 				    			}
-			                	for(int i=0; i<company.getNumberOfFurnitures(); i++){
-			                		if(company.getFurnitureList()[i].getProduct().equals(productName) && company.getFurnitureList()[i].getModel().equals(modelName)){
-			                			control = i;
-			                			break;
+			                	for(int i=0; i<company.getFurnitureList().size(); i++){ 
+									for(int j=0; j<company.getFurnitureList().get(i).size(); j++){
+				                		if(company.getFurnitureList().get(i).get(j).getProduct().equals(productName) && company.getFurnitureList().get(i).get(j).getModel().equals(modelName)){
+				                			control = i;
+				                			alIndex = j;
+				                			break;
+				                		}
 			                		}
 			                	}
 	                    	}
-                    		company.getEmployeeList().get(0).addProduct(company.getFurnitureList()[control],numberToAdd);
+                    		company.getEmployeeList().get(0).addProduct(company.getFurnitureList().get(control).get(alIndex),numberToAdd);
                     		company.getEmployeeList().get(0).seeProductList();
                     		break;
 
@@ -347,14 +351,18 @@ public class Main{
 					    			break;
 				    			}
 
-			                	for(int i=0; i<company.getNumberOfFurnitures(); i++){
-			                		if(company.getFurnitureList()[i].getProduct().equals(productName) && company.getFurnitureList()[i].getModel().equals(modelName)){
-			                			control1 = i;
-			                			break;
+				    			alIndex = -1;
+			                	for(int i=0; i<company.getFurnitureList().size(); i++){ 
+									for(int j=0; j<company.getFurnitureList().get(i).size(); j++){
+				                		if(company.getFurnitureList().get(i).get(j).getProduct().equals(productName) && company.getFurnitureList().get(i).get(j).getModel().equals(modelName)){
+				                			control1 = i;
+				                			alIndex = j;
+				                			break;
+				                		}
 			                		}
-			                	}
+	                    		}
 	                    	}
-                    		company.getEmployeeList().get(0).removeProduct(company.getFurnitureList()[control1], numToDelete);
+                    		company.getEmployeeList().get(0).removeProduct(company.getFurnitureList().get(control1).get(alIndex), numToDelete);
 	                    	company.getEmployeeList().get(0).seeProductList();
 	                    	break;
 
@@ -407,11 +415,11 @@ public class Main{
 
 	                        	company.getEmployeeList().get(0).seeProductList();
 
-	                        	int control2 = 0;
+	                        	int control2 = -1, alIndex2 = -1;
 	                        	String productName1;
 	                    		String modelName1;
 	                    		String color1;
-	                        	while(control2 == 0){
+	                        	while(control2 == -1){
 		                    		System.out.println("\nPlease enter product name: ");
 		                    		productName1 = inputString.nextLine();
 		                    		System.out.println("Please enter model name: ");
@@ -419,23 +427,26 @@ public class Main{
 		                    		System.out.println("Please enter color: ");
 		                    		color1 = inputString.nextLine();
 				                	
-				                	for(int i=0; i<company.getNumberOfFurnitures(); i++){
-				                		if(company.getFurnitureList()[i].getProduct().equals(productName1) && company.getFurnitureList()[i].getModel().equals(modelName1)){
-				                			control2 = i;
-				                			break;
+				                	for(int i=0; i<company.getFurnitureList().size(); i++){ 
+										for(int j=0; j<company.getFurnitureList().get(i).size(); j++){
+					                		if(company.getFurnitureList().get(i).get(j).getProduct().equals(productName1) && company.getFurnitureList().get(i).get(j).getModel().equals(modelName1)){
+					                			control2 = i;
+					                			alIndex2 = j;
+					                			break;
 					                		}
 					                	}
+					                }
 		                    	}
-								company.getEmployeeList().get(0).makeSale(company.getCustomerList().get(customersId2-1), company.getFurnitureList()[control2]);
-								if(company.getFurnitureList()[control2].getNumberInStock()-1 == 0 ){
-									company.getFurnitureList()[control2].setNumberInStock(0);
+								company.getEmployeeList().get(0).makeSale(company.getCustomerList().get(customersId2-1), company.getFurnitureList().get(control2).get(alIndex2));
+								if(company.getFurnitureList().get(control2).get(alIndex2).getNumberInStock()-1 == 0 ){
+									company.getFurnitureList().get(control2).get(alIndex2).setNumberInStock(0);
 								}
-								else if(company.getFurnitureList()[control2].getNumberInStock() == 0){
+								else if(company.getFurnitureList().get(control2).get(alIndex2).getNumberInStock() == 0){
 									System.out.println("Manager informed, this product will be supplied soon.\n");
-									company.getAdmin().addProduct(company.getFurnitureList()[control2], 5);
+									company.getAdmin().addProduct(company.getFurnitureList().get(control2).get(alIndex2), 5);
 								}
 								else{
-									company.getFurnitureList()[control2].setNumberInStock(company.getFurnitureList()[control2].getNumberInStock()-1);
+									company.getFurnitureList().get(control2).get(alIndex2).setNumberInStock(company.getFurnitureList().get(control2).get(alIndex2).getNumberInStock()-1);
 								}
 								
 								break;
@@ -464,6 +475,7 @@ public class Main{
 					    			break;
 	    			}
 
+        			int alIndex3 = -1;
                 	switch(exit){
                 		case 1:
                 			boolean check4case = false;
@@ -512,12 +524,14 @@ public class Main{
                     		System.out.println("Please enter color: ");
                     		color2 = inputString.nextLine();
 		                	
-		                	for(int i=0; i<company.getNumberOfFurnitures(); i++){
-		                		if(company.getFurnitureList()[i].getProduct().equals(productName2) && company.getFurnitureList()[i].getModel().equals(modelName2)){
-		                			control3 = i;
-		                			break;
+		                	for(int i=0; i<company.getFurnitureList().size(); i++){ 
+								for(int j=0; j<company.getFurnitureList().get(i).size(); j++){
+			                		if(company.getFurnitureList().get(i).get(j).getProduct().equals(productName2) && company.getFurnitureList().get(i).get(j).getModel().equals(modelName2)){
+			                			control3 = i;
+			                			break;
 			                		}
 			                	}
+			                }
 	                    	
 	                    	if(control3 != -1){
 	                    		System.out.println("\nThere is this type of office furniture in the stock.\n");
@@ -620,30 +634,34 @@ public class Main{
 									    	System.out.println("Please try with a number!!");
 							    			break;
 						    			}
-					                	for(int i=0; i<company.getNumberOfFurnitures(); i++){
-					                		if(company.getFurnitureList()[i].getProduct().equals(productName2) && company.getFurnitureList()[i].getModel().equals(modelName2)){
-					                			index3 = i;
-					                			break;
+
+					                	for(int i=0; i<company.getFurnitureList().size(); i++){ 
+											for(int j=0; j<company.getFurnitureList().get(i).size(); j++){
+						                		if(company.getFurnitureList().get(i).get(j).getProduct().equals(productName2) && company.getFurnitureList().get(i).get(j).getModel().equals(modelName2)){
+						                			index3 = i;
+						                			alIndex3 = j;
+						                			break;
 						                		}
 						                	}
+						                }
 				                    	
 				                    	if(index3 != -1){
-				                    		if(company.getFurnitureList()[index3].getNumberInStock() >= howMany){	
-				                    			boolean checkBuy = company.getCustomerList().get(company.getNumberOfCustomers()-1).buy(company.getFurnitureList()[index3]);
+				                    		if(company.getFurnitureList().get(index3).get(alIndex3).getNumberInStock() >= howMany){	
+				                    			boolean checkBuy = company.getCustomerList().get(company.getNumberOfCustomers()-1).buy(company.getFurnitureList().get(index3).get(alIndex3));
 				                    			
 				                    			if(checkBuy == true){
 			                						
 			                						System.out.println("\nSale is done.");
 
-				                					if(company.getFurnitureList()[index3].getNumberInStock()-1 == 0 ){
-														company.getFurnitureList()[index3].setNumberInStock(0);
+				                					if(company.getFurnitureList().get(index3).get(alIndex3).getNumberInStock()-1 == 0 ){
+														company.getFurnitureList().get(index3).get(alIndex3).setNumberInStock(0);
 													}
-													else if(company.getFurnitureList()[index3].getNumberInStock() == 0){
+													else if(company.getFurnitureList().get(index3).get(alIndex3).getNumberInStock() == 0){
 														System.out.println("Manager informed, this product will be supplied soon.\n");
-														company.getAdmin().addProduct(company.getFurnitureList()[index3], 5);
+														company.getAdmin().addProduct(company.getFurnitureList().get(index3).get(alIndex3), 5);
 													}
 													else{
-														company.getFurnitureList()[index3].setNumberInStock(company.getFurnitureList()[index3].getNumberInStock()-1);
+														company.getFurnitureList().get(index3).get(alIndex3).setNumberInStock(company.getFurnitureList().get(index3).get(alIndex3).getNumberInStock()-1);
 													}	
 
 			                					}
@@ -653,7 +671,7 @@ public class Main{
 					                    		/* Inform Manager */
 			                					System.out.println("\nSorry, we could not find the number of products you wanted.");
 			                					System.out.println("Manager informed, this product will be supplied soon.\n");
-			                					company.getAdmin().addProduct(company.getFurnitureList()[index3], howMany+5);
+			                					company.getAdmin().addProduct(company.getFurnitureList().get(index3).get(alIndex3), howMany+5);
 			                					break;
 						                    	}
 				                    	}
@@ -683,28 +701,32 @@ public class Main{
 								    	System.out.println("Please try with a number!!");
 						    			break;
 					    			}
-				                	for(int i=0; i<company.getNumberOfFurnitures(); i++){
-				                		if(company.getFurnitureList()[i].getProduct().equals(productName2) && company.getFurnitureList()[i].getModel().equals(modelName2)){
-				                			index3 = i;
-				                			break;
+					    			alIndex3 = -1;
+				                	for(int i=0; i<company.getFurnitureList().size(); i++){ 
+										for(int j=0; j<company.getFurnitureList().get(i).size(); j++){
+					                		if(company.getFurnitureList().get(i).get(j).getProduct().equals(productName2) && company.getFurnitureList().get(i).get(j).getModel().equals(modelName2)){
+					                			index3 = i;
+					                			alIndex3 = j;
+					                			break;
 					                		}
 					                	}
+					                }
 			                    	
 			                    	if(index3 != -1){
-				                    	if(company.getFurnitureList()[index3].getNumberInStock() >= howMany){	
-				                    		boolean checkBuy2 = company.getCustomerList().get(company.getNumberOfCustomers()-1).buy(company.getFurnitureList()[index3]);
+				                    	if(company.getFurnitureList().get(index3).get(alIndex3).getNumberInStock() >= howMany){	
+				                    		boolean checkBuy2 = company.getCustomerList().get(company.getNumberOfCustomers()-1).buy(company.getFurnitureList().get(index3).get(alIndex3));
 					                    	if(checkBuy2 == true){	
 					                    		System.out.println("\nSale is done.");
 
-												if(company.getFurnitureList()[index3].getNumberInStock()-1 == 0 ){
-													company.getFurnitureList()[index3].setNumberInStock(0);
+												if(company.getFurnitureList().get(index3).get(alIndex3).getNumberInStock()-1 == 0 ){
+													company.getFurnitureList().get(index3).get(alIndex3).setNumberInStock(0);
 												}
-												else if(company.getFurnitureList()[index3].getNumberInStock() == 0){
+												else if(company.getFurnitureList().get(index3).get(alIndex3).getNumberInStock() == 0){
 													System.out.println("Manager informed, this product will be supplied soon.\n");
-													company.getAdmin().addProduct(company.getFurnitureList()[index3], 5);
+													company.getAdmin().addProduct(company.getFurnitureList().get(index3).get(alIndex3), 5);
 												}
 												else{
-													company.getFurnitureList()[index3].setNumberInStock(company.getFurnitureList()[index3].getNumberInStock()-1);
+													company.getFurnitureList().get(index3).get(alIndex3).setNumberInStock(company.getFurnitureList().get(index3).get(alIndex3).getNumberInStock()-1);
 												}	
 											}
 				                    		break;
@@ -712,7 +734,7 @@ public class Main{
 				                    	else{
 		                					System.out.println("\nSorry, we could not find the number of products you wanted.");
 		                					System.out.println("Manager informed, this product will be supplied soon.\n");
-		                					company.getAdmin().addProduct(company.getFurnitureList()[index3], howMany+5);
+		                					company.getAdmin().addProduct(company.getFurnitureList().get(index3).get(alIndex3), howMany+5);
 		                					break;
 				                    	}
 			                    	}
