@@ -20,11 +20,8 @@ public class Company{
 	/**
 	* This static array in type Furniture is the furnitures' list
 	*/
-	protected static Furniture [] furnitureList = new Furniture [100];
-	/**
-	* This static integer value is the number of furnitures
-	*/
-	protected static int numberOfFurnitures = 0;
+	protected static HybridList<Furniture> furnitureList = new HybridList<Furniture>();
+
 	/**
 	* This Administrator type value is administrator
 	*/
@@ -48,7 +45,7 @@ public class Company{
 	 * @return integer.
 	 */
 	public int getNumberOfFurnitures(){
-		return numberOfFurnitures;
+		return furnitureList.getElCount();
 	}
 
 	/**
@@ -87,7 +84,7 @@ public class Company{
 	 * This method gives array of Furniture objects.
 	 * @return Furniture type array.
 	 */
-	public Furniture [] getFurnitureList(){
+	public HybridList<Furniture> getFurnitureList(){
 		return furnitureList;
 	}
 
@@ -183,31 +180,33 @@ public class Company{
 	}
 
 	/**
-	 * That method prints the furniture array.
+	 * That method prints the furnitures.
 	 */
 	public void seeProductList(){
 		int count = 0;
-		for(int i=0; i<numberOfFurnitures; i++){ ////////////////****************** BURADAKİ [i]'leri .get(i) falan yap hybridlistte nasilsa artik ***********************///////////////
-			if(furnitureList[i].getNumberInStock() > 0){
-				System.out.println("Product: " + furnitureList[i].getProduct());
-				System.out.println("Model: " + furnitureList[i].getModel());
-				System.out.println("Color: " + furnitureList[i].getColor());
-				System.out.println("Number in stock: " + furnitureList[i].getNumberInStock());
-				System.out.println("Branch: " + furnitureList[i].getWhichBranch());
-				System.out.println("\n");
-			}
-			else{
-				System.out.println("***SOLD OUT***");
-				System.out.println("Product: " + furnitureList[i].getProduct());
-				System.out.println("Model: " + furnitureList[i].getModel());
-				System.out.println("Color: " + furnitureList[i].getColor());
-				System.out.println("Number in stock: " + furnitureList[i].getNumberInStock());
-				System.out.println("Branch: " + furnitureList[i].getWhichBranch());
-				System.out.println("\n");
-				count += 1;
+		for(int i=0; i<furnitureList.size(); i++){ 
+			for(int j=0; j<furnitureList.get(i).size(); j++){
+				if(furnitureList.get(i).get(j).getNumberInStock() > 0){
+					System.out.println("Product: " + furnitureList.get(i).get(j).getProduct());
+					System.out.println("Model: " + furnitureList.get(i).get(j).getModel());
+					System.out.println("Color: " + furnitureList.get(i).get(j).getColor());
+					System.out.println("Number in stock: " + furnitureList.get(i).get(j).getNumberInStock());
+					System.out.println("Branch: " + furnitureList.get(i).get(j).getWhichBranch());
+					System.out.println("\n");
+				}
+				else{
+					System.out.println("***SOLD OUT***");
+					System.out.println("Product: " + furnitureList.get(i).get(j).getProduct());
+					System.out.println("Model: " + furnitureList.get(i).get(j).getModel());
+					System.out.println("Color: " + furnitureList.get(i).get(j).getColor());
+					System.out.println("Number in stock: " + furnitureList.get(i).get(j).getNumberInStock());
+					System.out.println("Branch: " + furnitureList.get(i).get(j).getWhichBranch());
+					System.out.println("\n");
+					count += 1;
+				}
 			}
 		}
-		if(count == numberOfFurnitures)
+		if(count == furnitureList.getElCount())
 			System.out.println("Sorry, all stock is empty now");
 	}
 

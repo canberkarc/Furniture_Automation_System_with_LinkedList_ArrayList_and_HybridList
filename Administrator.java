@@ -198,56 +198,57 @@ public class Administrator extends Company implements Person{
 	 * @param numberToAdd integer value that is number of furnitures to be added.
 	 */
 
-	////////////////////****************** BU METODA FURNITURE'I DUZELTTIKTEN SONRA BAK ********************/////////////////
 	public void addProduct(Furniture f, int numberToAdd){
 		if(numberToAdd == 0){
 			System.out.println("Number of product to be added must be greater than 1.\n");
 		}
-		else if(numberToAdd > 0 && numberOfFurnitures > 0){
-			int check = -1;
-			for(int i=0; i<numberOfFurnitures; i++){
-				if(furnitureList[i].getProduct() == f.getProduct() && furnitureList[i].getModel() == f.getModel()){
-					check = i;
+		else if(numberToAdd > 0 && furnitureList.getElCount() > 0){
+			int llIndex = -1, alIndex = -1;
+			for(int i=0; i<furnitureList.size(); i++){
+				if(furnitureList.get(i).indexOf(f) != -1){
+					llIndex = i;
+					alIndex = furnitureList.get(i).indexOf(f);
 					break;
 				}
 			}
-			if(check != -1){
-				furnitureList[check].setNumberInStock(furnitureList[check].getNumberInStock() + numberToAdd);
+			if(llIndex != -1){
+				furnitureList.get(llIndex).get(alIndex).setNumberInStock(furnitureList.get(llIndex).get(alIndex).getNumberInStock() + numberToAdd);
 			}
 			else{
-				furnitureList[numberOfFurnitures] = f;
-				furnitureList[numberOfFurnitures].setNumberInStock(furnitureList[numberOfFurnitures].getNumberInStock() + numberToAdd);
-				numberOfFurnitures += 1;
+				furnitureList.addElement(f);
+				llIndex = furnitureList.size()-1;
+				alIndex = furnitureList.get(llIndex).indexOf(f);
+				furnitureList.get(llIndex).get(alIndex).setNumberInStock(furnitureList.get(llIndex).get(alIndex).getNumberInStock() + numberToAdd);
 			}
 		}
-		else if(numberToAdd > 0 && numberOfFurnitures == 0){
-			furnitureList[numberOfFurnitures] = f;
-			furnitureList[numberOfFurnitures].setNumberInStock(furnitureList[numberOfFurnitures].getNumberInStock() + numberToAdd);
-			numberOfFurnitures += 1;
+		else if(numberToAdd > 0 && furnitureList.getElCount() == 0){
+			furnitureList.addElement(f);
+			furnitureList.get(0).get(0).setNumberInStock(numberToAdd);
 		}		
 	}
 
 	/**
 	 * That method show whether there is any product to be queried
 	 */
-	////////////////////****************** BU METODA FURNITURE'I DUZELTTIKTEN SONRA BAK ********************/////////////////
 	public void queryNeededProducts(){
 		int count = 0;
-		if(numberOfFurnitures > 0){
-			for(int i=0; i<numberOfFurnitures; i++){
-				if(furnitureList[i].getNumberInStock() == 0){
-					System.out.println("Product: " + furnitureList[i].getProduct());
-					System.out.println("Model: " + furnitureList[i].getModel());
-					System.out.println("Color: " + furnitureList[i].getColor());
-					System.out.println("Number in stock: " + furnitureList[i].getNumberInStock());
-					System.out.println("Branch: " + furnitureList[i].getWhichBranch());
-					System.out.println("\n");
+		if(furnitureList.getElCount() > 0){
+			for(int i=0; i<furnitureList.size(); i++){
+				for(int j=0; j<furnitureList.get(i).size(); j++){
+					if(furnitureList.get(i).get(j).getNumberInStock() == 0){
+						System.out.println("Product: " + furnitureList.get(i).get(j).getProduct());
+						System.out.println("Model: " + furnitureList.get(i).get(j).getModel());
+						System.out.println("Color: " + furnitureList.get(i).get(j).getColor());
+						System.out.println("Number in stock: " + furnitureList.get(i).get(j).getNumberInStock());
+						System.out.println("Branch: " + furnitureList.get(i).get(j).getWhichBranch());
+						System.out.println("\n");
+					}
+					else
+						count += 1;
 				}
-				else
-					count += 1;
 			}
-			if(count == numberOfFurnitures){
-			System.out.println("There is no product that need to be supplied\n");
+			if(count == furnitureList.getElCount()){
+				System.out.println("There is no product that need to be supplied\n");
 			}
 		}
 		else{

@@ -123,31 +123,33 @@ public class BranchEmployee extends Branch implements Person {
 	}
 
 	/**
-	*	That method prints product list.
-	*/
+	 * That method prints the furnitures.
+	 */
 	public void seeProductList(){
 		int count = 0;
-		for(int i=0; i<numberOfFurnitures; i++){
-			if(furnitureList[i].getNumberInStock() > 0){
-				System.out.println("Product: " + furnitureList[i].getProduct());
-				System.out.println("Model: " + furnitureList[i].getModel());
-				System.out.println("Color: " + furnitureList[i].getColor());
-				System.out.println("Number in stock: " + furnitureList[i].getNumberInStock());
-				System.out.println("Branch: " + furnitureList[i].getWhichBranch());
-				System.out.println("\n");
-			}
-			else{
-				System.out.println("***SOLD OUT***");
-				System.out.println("Product: " + furnitureList[i].getProduct());
-				System.out.println("Model: " + furnitureList[i].getModel());
-				System.out.println("Color: " + furnitureList[i].getColor());
-				System.out.println("Number in stock: " + furnitureList[i].getNumberInStock());
-				System.out.println("Branch: " + furnitureList[i].getWhichBranch());
-				System.out.println("\n");
-				count += 1;
+		for(int i=0; i<furnitureList.size(); i++){ 
+			for(int j=0; j<furnitureList.get(i).size(); j++){
+				if(furnitureList.get(i).get(j).getNumberInStock() > 0){
+					System.out.println("Product: " + furnitureList.get(i).get(j).getProduct());
+					System.out.println("Model: " + furnitureList.get(i).get(j).getModel());
+					System.out.println("Color: " + furnitureList.get(i).get(j).getColor());
+					System.out.println("Number in stock: " + furnitureList.get(i).get(j).getNumberInStock());
+					System.out.println("Branch: " + furnitureList.get(i).get(j).getWhichBranch());
+					System.out.println("\n");
+				}
+				else{
+					System.out.println("***SOLD OUT***");
+					System.out.println("Product: " + furnitureList.get(i).get(j).getProduct());
+					System.out.println("Model: " + furnitureList.get(i).get(j).getModel());
+					System.out.println("Color: " + furnitureList.get(i).get(j).getColor());
+					System.out.println("Number in stock: " + furnitureList.get(i).get(j).getNumberInStock());
+					System.out.println("Branch: " + furnitureList.get(i).get(j).getWhichBranch());
+					System.out.println("\n");
+					count += 1;
+				}
 			}
 		}
-		if(count == numberOfFurnitures)
+		if(count == furnitureList.getElCount())
 			System.out.println("Sorry, all stock is empty now");
 	}
 
@@ -160,16 +162,17 @@ public class BranchEmployee extends Branch implements Person {
 		if(numberToAdd == 0){
 			System.out.println("Number of product to be added must be greater than 1.\n");
 		}
-		else if(numberToAdd > 0 && numberOfFurnitures > 0){
-			int check = -1;
-			for(int i=0; i<numberOfFurnitures; i++){
-				if(furnitureList[i].getProduct() == f.getProduct() && furnitureList[i].getModel() == f.getModel()){
-					check = i;
+		else if(numberToAdd > 0 && furnitureList.getElCount() > 0){
+			int llIndex = -1, alIndex = -1;
+			for(int i=0; i<furnitureList.size(); i++){
+				if(furnitureList.get(i).indexOf(f) != -1){
+					llIndex = i;
+					alIndex = furnitureList.get(i).indexOf(f);
 					break;
 				}
 			}
-			if(check != -1){
-				furnitureList[check].setNumberInStock(furnitureList[check].getNumberInStock() + numberToAdd);
+			if(llIndex != -1){
+				furnitureList.get(llIndex).get(alIndex).setNumberInStock(furnitureList.get(llIndex).get(alIndex).getNumberInStock() + numberToAdd);
 			}
 			else
 				System.out.println("There is no product that you want to add in stock.\n");
@@ -184,7 +187,7 @@ public class BranchEmployee extends Branch implements Person {
 	 * @param numbertoDelete integer value that is number of furniture to be removed 
 	 */
 	public void removeProduct(Furniture f, int numbertoDelete){
-		if(numberOfFurnitures == 0)
+		if(furnitureList.getElCount() == 0)
 			System.out.println("Stock is empty.\n");
 		else{
 			if(numbertoDelete <= f.getNumberInStock()){

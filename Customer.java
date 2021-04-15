@@ -42,12 +42,7 @@ public class Customer extends Company implements Person{
 	/**
 	 * Array of previous orders of the customer.
 	 */
-	private Furniture [] previousOrders = new Furniture [20];
-
-	/**
-	 * Number of furnitures that bought by the customer.
-	 */
-	private int previousOrdersIndex = 0;
+	private HybridList<Furniture> previousOrders = new HybridList<Furniture>();
 
 	/**
 	 * Customer four-parameter Constructor
@@ -91,7 +86,7 @@ public class Customer extends Company implements Person{
 	* That method gets previous orders list
 	* @return previousOrders array of Furniture objects
 	*/
-	public Furniture [] getPreviousOrders(){
+	public HybridList<Furniture> getPreviousOrders(){
 		return previousOrders;
 	}
 
@@ -212,39 +207,33 @@ public class Customer extends Company implements Person{
 	}
 
 	/**
-	 * That method gets the number of products that customer bought.
-	 * @return previousOrdersIndex integer value of the customer's customer number.
-	 */	
-	public int getPreviousOrderIndex() {
-		return previousOrdersIndex;
-	}
-
-	/**
-	* That method prints furniture list
-	*/
+	 * That method prints the furnitures.
+	 */
 	public void seeProductList(){
 		int count = 0;
-		for(int i=0; i<numberOfFurnitures; i++){
-			if(furnitureList[i].getNumberInStock() > 0){
-				System.out.println("Product: " + furnitureList[i].getProduct());
-				System.out.println("Model: " + furnitureList[i].getModel());
-				System.out.println("Color: " + furnitureList[i].getColor());
-				System.out.println("Number in stock: " + furnitureList[i].getNumberInStock());
-				System.out.println("Branch: " + furnitureList[i].getWhichBranch());
-				System.out.println("\n");
-			}
-			else{
-				System.out.println("***SOLD OUT***");
-				System.out.println("Product: " + furnitureList[i].getProduct());
-				System.out.println("Model: " + furnitureList[i].getModel());
-				System.out.println("Color: " + furnitureList[i].getColor());
-				System.out.println("Number in stock: " + furnitureList[i].getNumberInStock());
-				System.out.println("Branch: " + furnitureList[i].getWhichBranch());
-				System.out.println("\n");
-				count += 1;
+		for(int i=0; i<furnitureList.size(); i++){ 
+			for(int j=0; j<furnitureList.get(i).size(); j++){
+				if(furnitureList.get(i).get(j).getNumberInStock() > 0){
+					System.out.println("Product: " + furnitureList.get(i).get(j).getProduct());
+					System.out.println("Model: " + furnitureList.get(i).get(j).getModel());
+					System.out.println("Color: " + furnitureList.get(i).get(j).getColor());
+					System.out.println("Number in stock: " + furnitureList.get(i).get(j).getNumberInStock());
+					System.out.println("Branch: " + furnitureList.get(i).get(j).getWhichBranch());
+					System.out.println("\n");
+				}
+				else{
+					System.out.println("***SOLD OUT***");
+					System.out.println("Product: " + furnitureList.get(i).get(j).getProduct());
+					System.out.println("Model: " + furnitureList.get(i).get(j).getModel());
+					System.out.println("Color: " + furnitureList.get(i).get(j).getColor());
+					System.out.println("Number in stock: " + furnitureList.get(i).get(j).getNumberInStock());
+					System.out.println("Branch: " + furnitureList.get(i).get(j).getWhichBranch());
+					System.out.println("\n");
+					count += 1;
+				}
 			}
 		}
-		if(count == numberOfFurnitures)
+		if(count == furnitureList.getElCount())
 			System.out.println("Sorry, all stock is empty now");
 	}
 
@@ -255,13 +244,12 @@ public class Customer extends Company implements Person{
 	*/
 	public boolean searchAproduct(Furniture fur){
 		boolean check = false;
-		for(int i=0; i<numberOfFurnitures; i++){
-			if(furnitureList[i].getNumberInStock() > 0 && fur.getProduct() == furnitureList[i].getProduct() && fur.getModel() == furnitureList[i].getModel()){
+		for(int i=0; i<furnitureList.size(); i++){
+			if(furnitureList.get(i).indexOf(fur) != -1){
 				System.out.println("There is this type of office furniture in the stock.\n");
 				return true;
 			}
 		}
-
 		System.out.println("Sorry, we couldn't find product you wanted.\n");
 		return false;
 	}
@@ -271,33 +259,23 @@ public class Customer extends Company implements Person{
 	* @param f Furniture object of furniture that bought by customer
 	*/
 	public void setPreviousOrders(Furniture f){
-		if(this.previousOrdersIndex != this.previousOrders.length){
-			this.previousOrders[this.previousOrdersIndex] = f;
-			this.previousOrdersIndex += 1;
-		}
-		else{
-			if(this.previousOrdersIndex == this.previousOrders.length){
-				this.previousOrdersIndex -= 1;
-			}
-			
-			for(int i=0; i<this.previousOrders.length-1; ++i){
-				this.previousOrders[i] = this.previousOrders[i+1];
-			}
-			this.previousOrders[this.previousOrdersIndex] = f;
-		}
+		this.previousOrders.addElement(f);
 	}
 
 	/**
 	* That method prints a customer's previous orders
 	*/
 	public void viewPreviousOrders(){
-		if(this.previousOrdersIndex >0){
+		if(this.previousOrders.getElCount() >0){
 			System.out.println("Previous Orders: \n\n");
-			for(int i=0; i<this.previousOrdersIndex; i++){
-				System.out.println("Product: " + this.previousOrders[i].getProduct() + ".\n");
-				System.out.println("Model: " + this.previousOrders[i].getModel() + ".\n");
-				System.out.println("Color: " + this.previousOrders[i].getColor() + ".\n");
-				System.out.println("\n");
+
+			for(int i=0; i<furnitureList.size(); i++){
+				for(int j=0; j<furnitureList.get(i).size(); j++){
+					System.out.println("Product: " + this.previousOrders.get(i).get(j).getProduct() + ".\n");
+					System.out.println("Model: " + this.previousOrders.get(i).get(j).getModel() + ".\n");
+					System.out.println("Color: " + this.previousOrders.get(i).get(j).getColor() + ".\n");
+					System.out.println("\n");
+				}
 			}
 		}
 		else
@@ -311,14 +289,19 @@ public class Customer extends Company implements Person{
 	*/
 	public boolean buy(Furniture fur){
 		int check = 0, check2 = 0;
-		if(numberOfFurnitures > 0){	
-			for(int i=0; i<numberOfFurnitures; i++){
-				if(furnitureList[i].getProduct().equals(fur.getProduct()) && furnitureList[i].getModel().equals(fur.getModel())) {
-					if(furnitureList[i].getNumberInStock() == 0){
-						check2 = 1;
+		
+		if(furnitureList.getElCount() > 0){	
+			for(int i=0; i<furnitureList.size(); i++){
+				for(int j=0; j<furnitureList.get(i).size(); j++){
+					
+					if(furnitureList.get(i).get(j).getProduct().equals(fur.getProduct()) && furnitureList.get(i).get(j).getModel().equals(fur.getModel())) {
+						if(furnitureList.get(i).get(j).getNumberInStock() == 0){
+							check2 = 1;
+						}
+						check = 1;
+						break;				
 					}
-					check = 1;
-					break;				
+
 				}
 			}
 		}

@@ -1,4 +1,6 @@
-import java.util.*;
+import java.lang.IllegalArgumentException;
+import java.lang.ArrayIndexOutOfBoundsException;
+import java.util.Arrays;
 
 /**
  * A class that implements some of the methods of the Java (generic) ArrayList class
@@ -167,16 +169,5 @@ public class KWArrayList<E>
 	public int size()
 	{
 		return size;
-	}
-	
-	/**
-	 * Move middle object of the array list to the end
-	 * O(n) = O(n) (remove is an O(n) operation; other than that there are only two lines of code)
-	 */
-	public void moveMiddleToEnd()
-	{
-		int index = size / 2; //find middle index
-		E toMove = remove(index); //remove from the middle and get the variable
-		add(toMove); //add the variable at the end
 	}
 }
